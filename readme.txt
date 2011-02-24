@@ -12,6 +12,16 @@ WARNING: Use at your own risk! This class is provided as-is with no implied warr
 
 ----------
 
+Some background: 
+
+These wrappers are intended to make your life easier so you don't need to be a SCORM expert to add SCORM support to your e-learning course.
+
+The SCORM API wrappers are an abstraction layer that makes adding SCORM code to your course a much simpler, less confusing task. They provide simple logic and error-checking for your course's SCORM code, and include some auto-handling, such as setting cmi.exit (aka cmi.core.exit) when exiting a course.
+
+These wrappers have gone largely unedited since 2008. I'm hoping that placing them on GitHub will spur myself and others to make improvements.
+
+----------
+
 The SCORM API Wrappers come in three varieties:
 
 * JavaScript
