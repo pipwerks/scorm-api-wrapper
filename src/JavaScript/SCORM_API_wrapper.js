@@ -1,6 +1,6 @@
 /* =====================================================================================
 
-SCORM wrapper v1.1.8 by Philip Hutchison 
+SCORM wrapper v1.1.9 by Philip Hutchison 
 
 Copyright (c) 2008 Philip Hutchison
 MIT-style license. Full license text can be found at 
