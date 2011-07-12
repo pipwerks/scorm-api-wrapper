@@ -166,28 +166,26 @@ pipwerks.SCORM.API.get = function(){
         find = pipwerks.SCORM.API.find,
         trace = pipwerks.UTILS.trace; 
      
-    if(win.parent && win.parent != win){ 
-    
+    if(win.parent && win.parent != win){
         API = find(win.parent); 
-        
     } 
      
-    if(!API && win.top.opener){ 
-    
-        API = find(win.top.opener); 
-        
-    } 
-     
-    if(API){  
-    
-        pipwerks.SCORM.API.isFound = true;
-        
-    } else {
-    
-        trace("API.get failed: Can't find the API!");
-                               
+    if(!API && win.top.opener){     
+        API = find(win.top.opener);
+    }
+
+	//Special handling for Plateau
+	//Thanks to Joseph Venditti for the patch
+    if(!API && win.top.opener.document) { 
+        API = find(win.top.opener.document); 
     }
      
+    if(API){  
+        pipwerks.SCORM.API.isFound = true;
+    } else {
+        trace("API.get failed: Can't find the API!");                   
+    }
+
     return API;
 
 };
