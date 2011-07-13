@@ -30,8 +30,8 @@ import flash.external.*;
 
 class com.pipwerks.SCORM {
 	
-	private var __connectionActive = false,
-				__debugActive = true;     //Enable (true) or disable (false)
+	private var __connectionActive:Boolean = false,
+				__debugActive:Boolean = true;     //Enable (true) or disable (false)
 
 
     public function SCORM() {
@@ -253,7 +253,7 @@ class com.pipwerks.SCORM {
 	
 	private function __stringToBoolean(value:String):Boolean {
 		
-		var t = typeof value;
+		var t:String = typeof value;
 		
 		switch(t){
 			
@@ -261,7 +261,7 @@ class com.pipwerks.SCORM {
 		   case "number": return !!value;
 		   case "undefined": return null;
 		   case "string": 
-				var str = value.toLowerCase();
+				var str:String = value.toLowerCase();
 				return (str === "true" || str === "1");
 
 		   default: return false;

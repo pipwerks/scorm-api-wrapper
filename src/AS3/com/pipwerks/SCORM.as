@@ -32,8 +32,8 @@ package com.pipwerks {
 	
 	public class SCORM {
 		
-		private var __connectionActive = false,
-					__debugActive = true;
+		private var __connectionActive:Boolean = false,
+					__debugActive:Boolean = true;
 	
 	
 		public function SCORM() {
@@ -254,7 +254,7 @@ package com.pipwerks {
 		
 		private function __stringToBoolean(value:String):Boolean {
 			
-			var t = typeof value;
+			var t:String = typeof value;
 			
 			switch(t){
 				
