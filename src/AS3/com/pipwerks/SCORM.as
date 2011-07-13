@@ -252,7 +252,7 @@ package com.pipwerks {
 			}
 		}
 		
-		private function __stringToBoolean(value:String):Boolean {
+		private function __stringToBoolean(value:*):Boolean {
 			
 			var t:String = typeof value;
 			

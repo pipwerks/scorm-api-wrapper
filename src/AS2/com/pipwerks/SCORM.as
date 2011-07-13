@@ -251,7 +251,8 @@ class com.pipwerks.SCORM {
 		}
 	}
 	
-	private function __stringToBoolean(value:String):Boolean {
+	//Purposely not typing the variable 'value'
+	private function __stringToBoolean(value):Boolean {
 		
 		var t:String = typeof value;
 		
