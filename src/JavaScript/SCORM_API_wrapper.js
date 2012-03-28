@@ -182,7 +182,7 @@ pipwerks.SCORM.API.get = function(){
 
     //Special handling for Plateau
     //Thanks to Joseph Venditti for the patch
-    if(!API && win.top.opener.document) {
+    if(!API && win.top.opener && win.top.opener.document) {
         API = find(win.top.opener.document);
     }
 
