@@ -169,7 +169,8 @@ pipwerks.SCORM.API.get = function(){
 
     var API = null,
         win = window,
-        find = pipwerks.SCORM.API.find,
+		scorm = pipwerks.SCORM,
+        find = scorm.API.find,
         trace = pipwerks.UTILS.trace;
 
     if(win.parent && win.parent != win){
@@ -187,7 +188,7 @@ pipwerks.SCORM.API.get = function(){
     }
 
     if(API){
-        pipwerks.SCORM.API.isFound = true;
+        scorm.API.isFound = true;
     } else {
         trace("API.get failed: Can't find the API!");
     }
@@ -238,10 +239,10 @@ pipwerks.SCORM.connection.initialize = function(){
 
     var success = false,
         scorm = pipwerks.SCORM,
-        completionStatus = pipwerks.SCORM.data.completionStatus,
+        completionStatus = scorm.data.completionStatus,
         trace = pipwerks.UTILS.trace,
         makeBoolean = pipwerks.UTILS.StringToBoolean,
-        debug = pipwerks.SCORM.debug,
+        debug = scorm.debug,
         traceMsgPrefix = "SCORM.connection.initialize ";
 
     trace("connection.initialize called.");
@@ -270,17 +271,17 @@ pipwerks.SCORM.connection.initialize = function(){
                     if(scorm.handleCompletionStatus){
 
                         //Automatically set new launches to incomplete
-                        completionStatus = pipwerks.SCORM.status("get");
+                        completionStatus = scorm.status("get");
 
                         if(completionStatus){
 
                             switch(completionStatus){
 
                                 //Both SCORM 1.2 and 2004
-                                case "not attempted": pipwerks.SCORM.status("set", "incomplete"); break;
+                                case "not attempted": scorm.status("set", "incomplete"); break;
 
                                 //SCORM 2004 only
-                                case "unknown" : pipwerks.SCORM.status("set", "incomplete"); break;
+                                case "unknown" : scorm.status("set", "incomplete"); break;
 
                                 //Additional options, presented here in case you'd like to use them
                                 //case "completed"  : break;
@@ -346,11 +347,11 @@ pipwerks.SCORM.connection.terminate = function(){
 
     var success = false,
         scorm = pipwerks.SCORM,
-        exitStatus = pipwerks.SCORM.data.exitStatus,
-        completionStatus = pipwerks.SCORM.data.completionStatus,
+        exitStatus = scorm.data.exitStatus,
+        completionStatus = scorm.data.completionStatus,
         trace = pipwerks.UTILS.trace,
         makeBoolean = pipwerks.UTILS.StringToBoolean,
-        debug = pipwerks.SCORM.debug,
+        debug = scorm.debug,
         traceMsgPrefix = "SCORM.connection.terminate ";
 
 
@@ -433,7 +434,7 @@ pipwerks.SCORM.data.get = function(parameter){
     var value = null,
         scorm = pipwerks.SCORM,
         trace = pipwerks.UTILS.trace,
-        debug = pipwerks.SCORM.debug,
+        debug = scorm.debug,
         traceMsgPrefix = "SCORM.data.get(" +parameter +") ";
 
     if(scorm.connection.isActive){
@@ -451,10 +452,12 @@ pipwerks.SCORM.data.get = function(parameter){
             errorCode = debug.getCode();
 
             //GetValue returns an empty string on errors
-            //Double-check errorCode to make sure empty string
-            //is really an error and not field value
-            if(value !== "" && errorCode === 0){
+            //If value is an empty string, check errorCode to make sure there are no errors
+            if(value !== "" || errorCode === 0){
 
+				//GetValue is successful.  
+				//If parameter is lesson_status/completion_status or exit status, let's
+				//grab the value and cache it so we can check it during connection.terminate()
                 switch(parameter){
 
                     case "cmi.core.lesson_status":
@@ -508,7 +511,7 @@ pipwerks.SCORM.data.set = function(parameter, value){
         scorm = pipwerks.SCORM,
         trace = pipwerks.UTILS.trace,
         makeBoolean = pipwerks.UTILS.StringToBoolean,
-        debug = pipwerks.SCORM.debug,
+        debug = scorm.debug,
         traceMsgPrefix = "SCORM.data.set(" +parameter +") ";
 
 
@@ -617,11 +620,11 @@ pipwerks.SCORM.status = function (action, status){
 
         switch(action){
 
-            case "get": success = pipwerks.SCORM.data.get(cmi); break;
+            case "get": success = scorm.data.get(cmi); break;
 
             case "set": if(status !== null){
 
-                            success = pipwerks.SCORM.data.set(cmi, status);
+                            success = scorm.data.set(cmi, status);
 
                         } else {
 
@@ -663,8 +666,8 @@ pipwerks.SCORM.status = function (action, status){
 
 pipwerks.SCORM.debug.getCode = function(){
 
-    var API = pipwerks.SCORM.API.getHandle(),
-        scorm = pipwerks.SCORM,
+    var scorm = pipwerks.SCORM,
+        API = scorm.API.getHandle(),
         trace = pipwerks.UTILS.trace,
         code = 0;
 
@@ -697,8 +700,8 @@ pipwerks.SCORM.debug.getCode = function(){
 
 pipwerks.SCORM.debug.getInfo = function(errorCode){
 
-    var API = pipwerks.SCORM.API.getHandle(),
-        scorm = pipwerks.SCORM,
+    var scorm = pipwerks.SCORM,
+        API = scorm.API.getHandle(),
         trace = pipwerks.UTILS.trace,
         result = "";
 
@@ -732,8 +735,8 @@ pipwerks.SCORM.debug.getInfo = function(errorCode){
 
 pipwerks.SCORM.debug.getDiagnosticInfo = function(errorCode){
 
-    var API = pipwerks.SCORM.API.getHandle(),
-        scorm = pipwerks.SCORM,
+    var scorm = pipwerks.SCORM,
+        API = scorm.API.getHandle(),
         trace = pipwerks.UTILS.trace,
         result = "";
 
