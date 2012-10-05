@@ -1,7 +1,7 @@
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20111123
+v1.1.20121005
 
 Created by Philip Hutchison, January 2008
 https://github.com/pipwerks/scorm-api-wrapper
@@ -790,6 +790,9 @@ pipwerks.SCORM.quit = pipwerks.SCORM.connection.terminate;
 pipwerks.UTILS.StringToBoolean = function(value){
     var t = typeof value;
     switch(t){
+       //typeof new String("true") === "object", so handle objects as string via fall-through. 
+	   //See https://github.com/pipwerks/scorm-api-wrapper/issues/3
+	   case "object":  
        case "string": return (/(true|1)/i).test(value);
        case "number": return !!value;
        case "boolean": return value;
