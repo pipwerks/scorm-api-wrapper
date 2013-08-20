@@ -72,84 +72,95 @@ pipwerks.SCORM.isAvailable = function(){
 pipwerks.SCORM.API.find = function(win){
 
     var API = null,
-        findAttempts = 0,
+		findAttempts = 0,
         findAttemptLimit = 500,
-        traceMsgPrefix = "SCORM.API.find",
-        trace = pipwerks.UTILS.trace,
-        scorm = pipwerks.SCORM;
+		errorGettingAPI = false;
+		traceMsgPrefix = "SCORM.API.find",
+		trace = pipwerks.UTILS.trace,
+		scorm = pipwerks.SCORM;
 
-    while ((!win.API && !win.API_1484_11) &&
-           (win.parent) &&
-           (win.parent != win) &&
-           (findAttempts <= findAttemptLimit)){
+	try {
+		while (!errorGettingParent &&
+			   (!win.API && !win.API_1484_11) &&
+			   (win.parent) &&
+			   (win.parent != win) &&
+			   (findAttempts <= findAttemptLimit)){
 
-                findAttempts++;
-                win = win.parent;
+					findAttempts++;
+					win = win.parent;
 
-    }
+		}
+	}
+	catch(e) {
+		errorGettingAPI = e;
+	}
 
-    //If SCORM version is specified by user, look for specific API
-    if(scorm.version){
+	try {
+		if(scorm.version){											//If SCORM version is specified by user, look for specific API
+		
+			switch(scorm.version){
+				
+				case "2004" : 
+				
+					if(win.API_1484_11){
+				
+						API = win.API_1484_11;
+					 
+					} else {
+						
+						trace(traceMsgPrefix +": SCORM version 2004 was specified by user, but API_1484_11 cannot be found.");
+						
+					}
+					
+					break;
+					
+				case "1.2" : 
+				
+					if(win.API){
+				
+						API = win.API;
+					 
+					} else {
+						
+						trace(traceMsgPrefix +": SCORM version 1.2 was specified by user, but API cannot be found.");
+						
+					}
+					
+					break;
+				
+			}
+			
+		} else {													//If SCORM version not specified by user, look for APIs
+			
+			if(win.API_1484_11) {									//SCORM 2004-specific API.
+		
+				scorm.version = "2004";								//Set version
+				API = win.API_1484_11;
+			 
+			} else if(win.API){										//SCORM 1.2-specific API
+				  
+				scorm.version = "1.2";								//Set version
+				API = win.API;
+			 
+			}
 
-        switch(scorm.version){
+		}
+	}
+	catch(e) {
+		errorGettingAPI = e;
+	}
 
-            case "2004" :
+	if(API){
+		
+		trace(traceMsgPrefix +": API found. Version: " +scorm.version);
+		trace("API: " +API);
 
-                if(win.API_1484_11){
-
-                    API = win.API_1484_11;
-
-                } else {
-
-                    trace(traceMsgPrefix +": SCORM version 2004 was specified by user, but API_1484_11 cannot be found.");
-
-                }
-
-                break;
-
-            case "1.2" :
-
-                if(win.API){
-
-                    API = win.API;
-
-                } else {
-
-                    trace(traceMsgPrefix +": SCORM version 1.2 was specified by user, but API cannot be found.");
-
-                }
-
-                break;
-
-        }
-
-    } else {                             //If SCORM version not specified by user, look for APIs
-
-        if(win.API_1484_11) {            //SCORM 2004-specific API.
-
-            scorm.version = "2004";      //Set version
-            API = win.API_1484_11;
-
-        } else if(win.API){              //SCORM 1.2-specific API
-
-            scorm.version = "1.2";       //Set version
-            API = win.API;
-
-        }
-
-    }
-
-    if(API){
-
-        trace(traceMsgPrefix +": API found. Version: " +scorm.version);
-        trace("API: " +API);
-
-    } else {
-
-        trace(traceMsgPrefix +": Error finding API. \nFind attempts: " +findAttempts +". \nFind attempt limit: " +findAttemptLimit);
-
-    }
-
+	} else {
+		
+		trace(traceMsgPrefix +": Error finding API. \nFind attempts: " +findAttempts +". \nFind attempt limit: " +findAttemptLimit+". \nError getting window parent: "+errorGettingAPI);
+		
+	}
+	
     return API;
 
 };
