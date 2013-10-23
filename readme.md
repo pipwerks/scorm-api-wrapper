@@ -1,11 +1,11 @@
-pipwerks SCORM Wrapper for JavaScript     (v1.1.20111123)
-pipwerks SCORM Wrapper for ActionScript 2 (v1.1.20111123)
-pipwerks SCORM Wrapper for ActionScript 3 (v1.1.20111123)
+* pipwerks SCORM Wrapper for JavaScript     (1.1.20121005)
+* pipwerks SCORM Wrapper for ActionScript 2 (v1.1.20111123)
+* pipwerks SCORM Wrapper for ActionScript 3 (v1.1.20111123)
 
-Created by Philip Hutchison, January 2008
+Created by Philip Hutchison, January 2008  
 https://github.com/pipwerks/scorm-api-wrapper
 
-Copyright (c) Philip Hutchison
+Copyright (c) Philip Hutchison  
 MIT-style license: http://pipwerks.mit-license.org/
 
 Inspired by APIWrapper.js, which was a demo file created by the ADL and Concurrent Technologies Corporation.
@@ -26,8 +26,6 @@ The SCORM API Wrappers come in three varieties:
 * ActionScript 2 (AS2)
 * ActionScript 3 (AS3)
 
-All three wrappers are SCORM version-agnostic, and will work with both SCORM 1.2 and SCORM 2004.
-
-Both of the ActionScript wrappers require the JavaScript wrapper; the AS wrappers use ExternalInterface to invoke functions contained in the JavaScript wrapper. If the JS wrapper is not present, the ActionScript wrappers will not work.
+All three wrappers are SCORM version-agnostic, and will work with both SCORM 1.2 and SCORM 2004. Both of the ActionScript wrappers require the JavaScript wrapper; the AS wrappers use ExternalInterface to invoke functions contained in the JavaScript wrapper. If the JS wrapper is not present, the ActionScript wrappers will not work.
 
 The ActionScript wrappers use ExternalInterface to communicate with JavaScript. ExternalInterface will not work in a local environment unless you change your Flash Player security settings.
