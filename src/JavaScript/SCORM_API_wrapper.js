@@ -1,9 +1,9 @@
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20121005
+v1.1.20140217
 
-Created by Philip Hutchison, January 2008
+Created by Philip Hutchison, January 2008-2014
 https://github.com/pipwerks/scorm-api-wrapper
 
 Copyright (c) Philip Hutchison
@@ -382,20 +382,27 @@ pipwerks.SCORM.connection.terminate = function(){
 
             }
 
-            switch(scorm.version){
-                case "1.2" : success = makeBoolean(API.LMSFinish("")); break;
-                case "2004": success = makeBoolean(API.Terminate("")); break;
-            }
+            //Ensure we persist the data
+            success = scorm.save();
 
             if(success){
-
-                scorm.connection.isActive = false;
-
-            } else {
-
-                errorCode = debug.getCode();
-                trace(traceMsgPrefix +"failed. \nError code: " +errorCode +" \nError info: " +debug.getInfo(errorCode));
-
+     
+                switch(scorm.version){
+                    case "1.2" : success = makeBoolean(API.LMSFinish("")); break;
+                    case "2004": success = makeBoolean(API.Terminate("")); break;
+                }
+                   
+                if(success){
+                        
+                    scorm.connection.isActive = false;
+                   
+                } else {
+                        
+                    errorCode = debug.getCode();
+                    trace(traceMsgPrefix +"failed. \nError code: " +errorCode +" \nError info: " +debug.getInfo(errorCode));
+       
+                }
+                
             }
 
         } else {
