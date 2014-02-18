@@ -169,7 +169,7 @@ pipwerks.SCORM.API.get = function(){
 
     var API = null,
         win = window,
-		scorm = pipwerks.SCORM,
+        scorm = pipwerks.SCORM,
         find = scorm.API.find,
         trace = pipwerks.UTILS.trace;
 
@@ -462,9 +462,9 @@ pipwerks.SCORM.data.get = function(parameter){
             //If value is an empty string, check errorCode to make sure there are no errors
             if(value !== "" || errorCode === 0){
 
-				//GetValue is successful.  
-				//If parameter is lesson_status/completion_status or exit status, let's
-				//grab the value and cache it so we can check it during connection.terminate()
+                //GetValue is successful.  
+                //If parameter is lesson_status/completion_status or exit status, let's
+                //grab the value and cache it so we can check it during connection.terminate()
                 switch(parameter){
 
                     case "cmi.core.lesson_status":
@@ -798,8 +798,8 @@ pipwerks.UTILS.StringToBoolean = function(value){
     var t = typeof value;
     switch(t){
        //typeof new String("true") === "object", so handle objects as string via fall-through. 
-	   //See https://github.com/pipwerks/scorm-api-wrapper/issues/3
-	   case "object":  
+       //See https://github.com/pipwerks/scorm-api-wrapper/issues/3
+       case "object":  
        case "string": return (/(true|1)/i).test(value);
        case "number": return !!value;
        case "boolean": return value;
