@@ -1,0 +1,22 @@
+{
+  "name": "scorm-api-wrapper",
+  "version": "1.1.20140217",
+  "description": "The pipwerks SCORM API Wrapper",
+  "main": "src/JavaScript/SCORM_API_wrapper.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pipwerks/scorm-api-wrapper"
+  },
+  "keywords": [
+    "scorm"
+  ],
+  "author": "Philip Hutchison",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pipwerks/scorm-api-wrapper/issues"
+  },
+  "homepage": "https://github.com/pipwerks/scorm-api-wrapper",
+  "devDependencies": {
+    "uglify-js": "^2.4.13"
+  }
+}
