@@ -1,0 +1,20 @@
+{
+  "name": "scorm-api-wrapper",
+  "version": "1.1.20140217",
+  "homepage": "https://github.com/pipwerks/scorm-api-wrapper",
+  "authors": [
+    "Philip Hutchison"
+  ],
+  "description": "The pipwerks SCORM API Wrapper",
+  "main": "src/JavaScript/SCORM_API_wrapper.js",
+  "keywords": [
+    "scorm"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/AS2",
+    "src/AS3"
+  ]
+}
