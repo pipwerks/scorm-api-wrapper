@@ -14,7 +14,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-	"src/AS2",
-	"src/AS3"
+    "src/AS2",
+    "src/AS3"
   ]
 }
