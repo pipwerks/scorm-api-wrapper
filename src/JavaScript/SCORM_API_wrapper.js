@@ -544,6 +544,8 @@ pipwerks.SCORM.data.set = function(parameter, value){
 
             } else {
 
+                errorCode = debug.getCode();
+
                 trace(traceMsgPrefix +"failed. \nError code: " +errorCode +". \nError info: " +debug.getInfo(errorCode));
 
             }
