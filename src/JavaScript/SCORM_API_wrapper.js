@@ -292,6 +292,9 @@ pipwerks.SCORM.connection.initialize = function(){
 
                             }
 
+                            //Commit changes
+                            scorm.save();
+
                         }
 
                     }
