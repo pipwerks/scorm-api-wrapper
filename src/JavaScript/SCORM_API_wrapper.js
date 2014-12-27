@@ -179,7 +179,7 @@ pipwerks.SCORM.API.get = function(){
         API = find(win.parent);
     }
 
-    if(!API && win.top.opener){
+    if(!API && win.top && win.top.opener){
         API = find(win.top.opener);
     }
 
