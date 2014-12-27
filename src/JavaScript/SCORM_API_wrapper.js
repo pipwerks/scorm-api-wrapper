@@ -1,7 +1,9 @@
+/*global console*/
+
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20140217
+v1.1.20141226
 
 Created by Philip Hutchison, January 2008-2014
 https://github.com/pipwerks/scorm-api-wrapper
@@ -828,7 +830,7 @@ pipwerks.UTILS.trace = function(msg){
      if(pipwerks.debug.isActive){
 
         if(window.console && window.console.log){
-            console.log(msg);
+            window.console.log(msg);
         } else {
             //alert(msg);
         }
