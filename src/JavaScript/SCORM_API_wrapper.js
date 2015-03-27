@@ -175,7 +175,9 @@ pipwerks.SCORM.API.get = function(){
         find = scorm.API.find,
         trace = pipwerks.UTILS.trace;
 
-    if(win.parent && win.parent != win){
+    API = find(win);
+
+    if(!API && win.parent && win.parent != win){
         API = find(win.parent);
     }
 
