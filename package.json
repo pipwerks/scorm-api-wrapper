@@ -1,0 +1,22 @@
+{
+  "name": "scorm-api-wrapper",
+  "version": "1.1.20121005",
+  "description": "The pipwerks SCORM API Wrapper ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pipwerks/scorm-api-wrapper"
+  },
+  "keywords": [
+    "SCORM"
+  ],
+  "author": "Philip Hutchison (pipwerks)",
+  "license": "MIT-style license: http://pipwerks.mit-license.org/",
+  "bugs": {
+    "url": "https://github.com/pipwerks/scorm-api-wrapper/issues"
+  },
+  "homepage": "https://github.com/pipwerks/scorm-api-wrapper"
+}
