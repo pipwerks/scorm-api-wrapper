@@ -3,7 +3,7 @@
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20141226
+v1.1.20150327
 
 Created by Philip Hutchison, January 2008-2014
 https://github.com/pipwerks/scorm-api-wrapper
