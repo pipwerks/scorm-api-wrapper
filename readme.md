@@ -1,7 +1,3 @@
-* pipwerks SCORM Wrapper for JavaScript     (1.1.20121005)
-* pipwerks SCORM Wrapper for ActionScript 2 (v1.1.20111123)
-* pipwerks SCORM Wrapper for ActionScript 3 (v1.1.20111123)
-
 Created by Philip Hutchison, January 2008  
 https://github.com/pipwerks/scorm-api-wrapper
 
