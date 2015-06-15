@@ -1,6 +1,6 @@
 {
   "name": "scorm-api-wrapper",
-  "version": "1.1.20150327",
+  "version": "1.1.20150614",
   "description": "The pipwerks SCORM API Wrapper ",
   "main": "index.js",
   "scripts": {
