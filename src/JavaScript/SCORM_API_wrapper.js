@@ -3,7 +3,7 @@
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20150327
+v1.1.20150614
 
 Created by Philip Hutchison, January 2008-2014
 https://github.com/pipwerks/scorm-api-wrapper
@@ -187,7 +187,7 @@ pipwerks.SCORM.API.get = function(){
 
     //Special handling for Plateau
     //Thanks to Joseph Venditti for the patch
-    if(!API && win.top.opener && win.top.opener.document) {
+    if(!API && win.top && win.top.opener && win.top.opener.document) {
         API = find(win.top.opener.document);
     }
 
