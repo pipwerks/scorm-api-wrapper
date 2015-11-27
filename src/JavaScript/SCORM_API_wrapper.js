@@ -175,7 +175,13 @@ pipwerks.SCORM.API.get = function(){
         find = scorm.API.find,
         trace = pipwerks.UTILS.trace;
 
-    API = find(win);
+    try {
+        trace("Searching in window for API");
+        API = find(win);
+    }
+    catch(e){
+        trace("Error while accessing window: " + e);
+    }
 
     try {
         if (win.parent && win.parent != win) {
@@ -411,23 +417,23 @@ pipwerks.SCORM.connection.terminate = function(){
             success = scorm.save();
 
             if(success){
-     
+
                 switch(scorm.version){
                     case "1.2" : success = makeBoolean(API.LMSFinish("")); break;
                     case "2004": success = makeBoolean(API.Terminate("")); break;
                 }
-                   
+
                 if(success){
-                        
+
                     scorm.connection.isActive = false;
-                   
+
                 } else {
-                        
+
                     errorCode = debug.getCode();
                     trace(traceMsgPrefix +"failed. \nError code: " +errorCode +" \nError info: " +debug.getInfo(errorCode));
-       
+
                 }
-                
+
             }
 
         } else {
@@ -824,9 +830,9 @@ pipwerks.SCORM.quit = pipwerks.SCORM.connection.terminate;
 pipwerks.UTILS.StringToBoolean = function(value){
     var t = typeof value;
     switch(t){
-       //typeof new String("true") === "object", so handle objects as string via fall-through. 
+       //typeof new String("true") === "object", so handle objects as string via fall-through.
        //See https://github.com/pipwerks/scorm-api-wrapper/issues/3
-       case "object":  
+       case "object":
        case "string": return (/(true|1)/i).test(value);
        case "number": return !!value;
        case "boolean": return value;
