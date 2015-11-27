@@ -177,18 +177,36 @@ pipwerks.SCORM.API.get = function(){
 
     API = find(win);
 
-    if(!API && win.parent && win.parent != win){
-        API = find(win.parent);
+    try {
+        if (win.parent && win.parent != win) {
+            trace("Searching in window.parent for API");
+            API = find(win.parent);
+        }
+    }
+    catch (e) {
+        trace("Error while accessing window.parent: " + e);
     }
 
-    if(!API && win.top && win.top.opener){
-        API = find(win.top.opener);
+    try {
+        if (!API && win.top.opener) {
+            trace("Searching in window.top.opener for API");
+            API = find(win.top.opener);
+        }
+    }
+    catch (e) {
+        trace("Error while accessing window.top.opener: " + e);
     }
 
     //Special handling for Plateau
     //Thanks to Joseph Venditti for the patch
-    if(!API && win.top && win.top.opener && win.top.opener.document) {
-        API = find(win.top.opener.document);
+    try {
+        if (!API && win.top.opener && win.top.opener.document) {
+            trace("Searching in window.top.opener.document for API");
+            API = find(win.top.opener.document);
+        }
+    }
+    catch (e) {
+        trace("Error while accessing win.top.opener.document: " + e);
     }
 
     if(API){
