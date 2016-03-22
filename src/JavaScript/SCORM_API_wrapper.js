@@ -3,7 +3,7 @@
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20150614
+v1.1.20160309
 
 Created by Philip Hutchison, January 2008-2014
 https://github.com/pipwerks/scorm-api-wrapper
@@ -568,6 +568,8 @@ pipwerks.SCORM.data.set = function(parameter, value){
         trace(traceMsgPrefix +"failed: API connection is inactive.");
 
     }
+
+	trace(traceMsgPrefix +" value: " +value);
 
     return success;
 
