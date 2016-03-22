@@ -5,7 +5,7 @@
 pipwerks SCORM Wrapper for JavaScript
 v1.1.20160322
 
-Created by Philip Hutchison, January 2008-2014
+Created by Philip Hutchison, January 2008-2016
 https://github.com/pipwerks/scorm-api-wrapper
 
 Copyright (c) Philip Hutchison
