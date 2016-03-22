@@ -3,7 +3,7 @@
 /* ===========================================================
 
 pipwerks SCORM Wrapper for JavaScript
-v1.1.20160309
+v1.1.20160322
 
 Created by Philip Hutchison, January 2008-2014
 https://github.com/pipwerks/scorm-api-wrapper
@@ -393,23 +393,23 @@ pipwerks.SCORM.connection.terminate = function(){
             success = scorm.save();
 
             if(success){
-     
+
                 switch(scorm.version){
                     case "1.2" : success = makeBoolean(API.LMSFinish("")); break;
                     case "2004": success = makeBoolean(API.Terminate("")); break;
                 }
-                   
+
                 if(success){
-                        
+
                     scorm.connection.isActive = false;
-                   
+
                 } else {
-                        
+
                     errorCode = debug.getCode();
                     trace(traceMsgPrefix +"failed. \nError code: " +errorCode +" \nError info: " +debug.getInfo(errorCode));
-       
+
                 }
-                
+
             }
 
         } else {
@@ -449,7 +449,7 @@ pipwerks.SCORM.data.get = function(parameter){
         scorm = pipwerks.SCORM,
         trace = pipwerks.UTILS.trace,
         debug = scorm.debug,
-        traceMsgPrefix = "SCORM.data.get(" +parameter +") ";
+        traceMsgPrefix = "SCORM.data.get('" +parameter +"') ";
 
     if(scorm.connection.isActive){
 
@@ -469,7 +469,7 @@ pipwerks.SCORM.data.get = function(parameter){
             //If value is an empty string, check errorCode to make sure there are no errors
             if(value !== "" || errorCode === 0){
 
-                //GetValue is successful.  
+                //GetValue is successful.
                 //If parameter is lesson_status/completion_status or exit status, let's
                 //grab the value and cache it so we can check it during connection.terminate()
                 switch(parameter){
@@ -526,7 +526,7 @@ pipwerks.SCORM.data.set = function(parameter, value){
         trace = pipwerks.UTILS.trace,
         makeBoolean = pipwerks.UTILS.StringToBoolean,
         debug = scorm.debug,
-        traceMsgPrefix = "SCORM.data.set(" +parameter +") ";
+        traceMsgPrefix = "SCORM.data.set('" +parameter +"') ";
 
 
     if(scorm.connection.isActive){
@@ -808,9 +808,9 @@ pipwerks.SCORM.quit = pipwerks.SCORM.connection.terminate;
 pipwerks.UTILS.StringToBoolean = function(value){
     var t = typeof value;
     switch(t){
-       //typeof new String("true") === "object", so handle objects as string via fall-through. 
+       //typeof new String("true") === "object", so handle objects as string via fall-through.
        //See https://github.com/pipwerks/scorm-api-wrapper/issues/3
-       case "object":  
+       case "object":
        case "string": return (/(true|1)/i).test(value);
        case "number": return !!value;
        case "boolean": return value;
