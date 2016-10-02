@@ -842,4 +842,4 @@ pipwerks.UTILS.trace = function(msg){
      }
 };
 
-module.exports = pipwerks;
+module.exports = pipwerks.SCORM;
