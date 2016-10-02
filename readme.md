@@ -25,3 +25,24 @@ The SCORM API Wrappers come in three varieties:
 All three wrappers are SCORM version-agnostic, and will work with both SCORM 1.2 and SCORM 2004. Both of the ActionScript wrappers require the JavaScript wrapper; the AS wrappers use ExternalInterface to invoke functions contained in the JavaScript wrapper. If the JS wrapper is not present, the ActionScript wrappers will not work.
 
 The ActionScript wrappers use ExternalInterface to communicate with JavaScript. ExternalInterface will not work in a local environment unless you change your Flash Player security settings.
+
+##Usage as Common JS module
+
+Add github repo to `package.js` dependencies
+
+```
+"scorm-api-wrapper": "git+https://github.com/hshafy/scorm-api-wrapper"
+```
+
+Install using npm
+
+```
+npm install
+```
+
+Require SCORM object
+
+```
+var SCORM = require ('scorm-api-wrapper');
+SCORM.init();
+```
