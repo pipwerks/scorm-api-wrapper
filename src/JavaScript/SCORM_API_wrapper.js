@@ -268,7 +268,7 @@ pipwerks.SCORM.connection.initialize = function(){
                 //Double-check that connection is active and working before returning 'true' boolean
                 errorCode = debug.getCode();
 
-                if(errorCode !== null && errorCode === 0){
+                if(errorCode !== null && errorCode === 0 || isNaN(errorCode)){
 
                     scorm.connection.isActive = true;
 
