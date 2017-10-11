@@ -33,6 +33,7 @@ pipwerks.SCORM = {                                  //Define the SCORM object
     version:    null,                               //Store SCORM version.
     handleCompletionStatus: true,                   //Whether or not the wrapper should automatically handle the initial completion status
     handleExitMode: true,                           //Whether or not the wrapper should automatically handle the exit mode
+    handleSessionTime: true,                        //Whether or not the wrapper should automatically handle the session time	
     API:        { handle: null,
                   isFound: false },                 //Create API child object
     connection: { isActive: false },                //Create connection child object
