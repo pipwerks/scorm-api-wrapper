@@ -38,7 +38,8 @@ pipwerks.SCORM = {                                  //Define the SCORM object
                   isFound: false },                 //Create API child object
     connection: { isActive: false },                //Create connection child object
     data:       { completionStatus: null,
-                  exitStatus: null },               //Create data child object
+                  exitStatus: null,
+                  dtmInitialized: null},             //Create data child object
     debug:      {}                                  //Create debug child object
 };
 
