@@ -253,6 +253,9 @@ pipwerks.SCORM.connection.initialize = function(){
 
     trace("connection.initialize called.");
 
+    //set init date-time
+    scorm.data.dtmInitialized = new Date();
+	
     if(!scorm.connection.isActive){
 
         var API = scorm.API.getHandle(),
