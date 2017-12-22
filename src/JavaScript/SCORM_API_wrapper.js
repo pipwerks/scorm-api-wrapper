@@ -387,11 +387,9 @@ pipwerks.SCORM.connection.terminate = function(){
                     //the time format is different on scorm 1.2 or 2004, so we use 
                     //different conversions depending on the case 
                     case "1.2" :
-                        //success = this.set("cmi.core.session_time",MillisecondsToCMIDuration(n)); 
                         this.set("cmi.core.session_time",pipwerks.UTILS.MillisecondsToCMIDuration(n)); 
                     break;
                     case "2004":
-                        //success = this.set("cmi.session_time",centisecsToISODuration(Math.floor(n/10)));
                         this.set("cmi.session_time",pipwerks.UTILS.centisecsToISODuration(Math.floor(n/10)));
                     break; 
                 }
