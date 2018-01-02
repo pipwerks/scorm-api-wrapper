@@ -10,6 +10,7 @@ QUnit.test("centisecsToISODuration", function (assert){
     assert.equal(pipwerks.UTILS.centisecsToISODuration(null), 'PT0H0M0S');
     assert.equal(pipwerks.UTILS.centisecsToISODuration(''), 'PT0H0M0S');
     assert.equal(pipwerks.UTILS.centisecsToISODuration(0), 'PT0H0M0S');
+    assert.equal(pipwerks.UTILS.centisecsToISODuration(-1), 'PT0H0M0S');
 
 });
 
@@ -25,5 +26,6 @@ QUnit.test("MillisecondsToCMIDuration", function (assert) {
     assert.equal(pipwerks.UTILS.MillisecondsToCMIDuration(null), '00:00:00');
     assert.equal(pipwerks.UTILS.MillisecondsToCMIDuration(''), '00:00:00');
     assert.equal(pipwerks.UTILS.MillisecondsToCMIDuration(0), '00:00:00');
+    assert.equal(pipwerks.UTILS.MillisecondsToCMIDuration(-1), '00:00:00');
 
 });

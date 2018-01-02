@@ -881,6 +881,7 @@ pipwerks.UTILS.trace = function(msg){
 pipwerks.UTILS.MillisecondsToCMIDuration = function(n){
 
     //Convert duration from milliseconds to 0000:00:00.00 format 
+    n = (!n || n<0)? 0 : n; //default value and force positive duration
     var hms = ""; 
     var dtm = new Date();        dtm.setTime(n); 
     var h = "0" + Math.floor(n / 3600000); 
