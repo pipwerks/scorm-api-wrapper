@@ -379,7 +379,7 @@ pipwerks.SCORM.connection.terminate = function(){
 
                 var dtm = new Date(); 
 
-                //in the next line you substract the time recorded when initialising 
+                //in the next line you subtract the time recorded when initialising 
                 //the connection from the present time. 
                 var n = dtm.getTime() - dtmInitialized.getTime(); 
                 switch(scorm.version){ 
