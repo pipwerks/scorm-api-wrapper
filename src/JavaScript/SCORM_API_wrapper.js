@@ -896,7 +896,7 @@ pipwerks.UTILS.msToCMIDuration = function(n){
 
 /* -------------------------------------------------------------------------
    pipwerks.UTILS.csToISODuration()
-   Converts time to scorm 2004 time format
+   Converts time to scorm 2004 time format using ISO 8601
 
    Parameters: n (number)
    Return:     String
