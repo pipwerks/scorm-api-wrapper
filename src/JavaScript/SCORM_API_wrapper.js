@@ -873,6 +873,7 @@ pipwerks.UTILS.trace = function(msg){
 /* -------------------------------------------------------------------------
    pipwerks.UTILS.MillisecondsToCMIDuration()
    Converts time to scorm 1.2 time format 
+   Convert duration from milliseconds to 0000:00:00.00 format 
 
    Parameters: n (number)
    Return:     String
@@ -880,7 +881,6 @@ pipwerks.UTILS.trace = function(msg){
 
 pipwerks.UTILS.MillisecondsToCMIDuration = function(n){
 
-    //Convert duration from milliseconds to 0000:00:00.00 format 
     n = (!n || n<0)? 0 : n; //default value and force positive duration
     var hms = ""; 
     var dtm = new Date();        dtm.setTime(n); 
