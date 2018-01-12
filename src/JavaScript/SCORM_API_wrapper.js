@@ -387,10 +387,10 @@ pipwerks.SCORM.connection.terminate = function(){
                     //the time format is different on scorm 1.2 or 2004, so we use 
                     //different conversions depending on the case 
                     case "1.2" :
-                        this.set("cmi.core.session_time",pipwerks.UTILS.MillisecondsToCMIDuration(n)); 
+                        this.set("cmi.core.session_time",pipwerks.UTILS.msToCMIDuration(n)); 
                     break;
                     case "2004":
-                        this.set("cmi.session_time",pipwerks.UTILS.centisecsToISODuration(Math.floor(n/10)));
+                        this.set("cmi.session_time",pipwerks.UTILS.csToISODuration(Math.floor(n/10)));
                     break; 
                 }
 
@@ -871,7 +871,7 @@ pipwerks.UTILS.trace = function(msg){
 
 
 /* -------------------------------------------------------------------------
-   pipwerks.UTILS.MillisecondsToCMIDuration()
+   pipwerks.UTILS.msToCMIDuration()
    Converts time to scorm 1.2 time format 
    Convert duration from milliseconds to 0000:00:00.00 format 
 
@@ -879,7 +879,7 @@ pipwerks.UTILS.trace = function(msg){
    Return:     String
 ---------------------------------------------------------------------------- */
 
-pipwerks.UTILS.MillisecondsToCMIDuration = function(n){
+pipwerks.UTILS.msToCMIDuration = function(n){
 
     n = (!n || n < 0)? 0 : n; //default value and force positive duration
     var hms = ""; 
@@ -895,14 +895,14 @@ pipwerks.UTILS.MillisecondsToCMIDuration = function(n){
 
 
 /* -------------------------------------------------------------------------
-   pipwerks.UTILS.centisecsToISODuration()
+   pipwerks.UTILS.csToISODuration()
    Converts time to scorm 2004 time format
 
    Parameters: n (number)
    Return:     String
 ---------------------------------------------------------------------------- */
 
-pipwerks.UTILS.centisecsToISODuration = function(n){ 
+pipwerks.UTILS.csToISODuration = function(n){ 
 
     // Note: SCORM and IEEE 1484.11.1 require centisec precision 
     // Months calculated by approximation based on average number 
