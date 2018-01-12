@@ -881,14 +881,14 @@ pipwerks.UTILS.trace = function(msg){
 
 pipwerks.UTILS.MillisecondsToCMIDuration = function(n){
 
-    n = (!n || n<0)? 0 : n; //default value and force positive duration
+    n = (!n || n < 0)? 0 : n; //default value and force positive duration
     var hms = ""; 
     var dtm = new Date();        dtm.setTime(n); 
     var h = "0" + Math.floor(n / 3600000); 
     var m = "0" + dtm.getMinutes(); 
     var s = "0" + dtm.getSeconds(); 
-    hms = h.substr(h.length-2)+":"+m.substr(m.length-2)+":"; 
-    hms += s.substr(s.length-2); 
+    hms = h.substr(h.length - 2) + ":"+ m.substr(m.length - 2) + ":"; 
+    hms += s.substr(s.length - 2); 
     return hms 
 
 };
@@ -938,7 +938,7 @@ pipwerks.UTILS.centisecsToISODuration = function(n){
         str += "T"; 
         if (nH > 0) str += nH + "H"; 
         if (nMin > 0) str += nMin + "M"; 
-                if (nCs > 0) str += (nCs / 100) + "S"; 
+        if (nCs > 0) str += (nCs / 100) + "S"; 
     } 
     if (str == "P") str = "PT0H0M0S"; 
       // technically PT0S should do but SCORM test suite assumes longer form. 
