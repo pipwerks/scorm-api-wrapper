@@ -390,11 +390,7 @@ pipwerks.SCORM.connection.terminate = function(){
             }
 
             //Ensure we persist the data for 1.2 - not required for 2004 where an implicit commit is applied during the Terminate
-            if(scorm.version === "1.2"){
-
-                success = scorm.save();
-
-            }
+            success = (scorm.version === "1.2") ? scorm.save() : true;
 
             if(success){
 
