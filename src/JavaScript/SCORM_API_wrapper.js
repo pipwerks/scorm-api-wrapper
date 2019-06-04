@@ -24,7 +24,7 @@ further modified by Philip Hutchison
 
 =============================================================== */
 
-(function(root, factory) {
+(function (root, factory) {
 
     "use strict";
 
@@ -40,7 +40,7 @@ further modified by Philip Hutchison
         // Browser globals (root is window)
         root.pipwerks = factory();
     }
-}(this, function() {
+}(this, function () {
 
     "use strict";
 
@@ -73,7 +73,7 @@ further modified by Philip Hutchison
        Returns:    Boolean (true)
     ----------------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.isAvailable = function() {
+    pipwerks.SCORM.isAvailable = function () {
         return true;
     };
 
@@ -90,75 +90,76 @@ further modified by Philip Hutchison
        Returns:    Object if API is found, null if no API found
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.API.find = function(win) {
+    pipwerks.SCORM.API.find = function (win) {
 
         var API = null,
             findAttempts = 0,
             findAttemptLimit = 500,
             traceMsgPrefix = "SCORM.API.find",
             trace = pipwerks.UTILS.trace,
+            windowHasApi = pipwerks.UTILS.windowHasApi,
             scorm = pipwerks.SCORM;
 
-        while ((!win.API && !win.API_1484_11) &&
+        
+        while (!windowHasApi(win) &&
             (win.parent) &&
             (win.parent != win) &&
             (findAttempts <= findAttemptLimit)) {
 
             findAttempts++;
             win = win.parent;
-
         }
 
-        //If SCORM version is specified by user, look for specific API
-        if (scorm.version) {
+        if (findAttempts <= findAttemptLimit && windowHasApi(win)) {
 
-            switch (scorm.version) {
+            //If SCORM version is specified by user, look for specific API
+            if (scorm.version) {
 
-                case "2004":
+                switch (scorm.version) {
 
-                    if (win.API_1484_11) {
+                    case "2004":
 
-                        API = win.API_1484_11;
+                        if (win.API_1484_11) {
 
-                    } else {
+                            API = win.API_1484_11;
 
-                        trace(traceMsgPrefix + ": SCORM version 2004 was specified by user, but API_1484_11 cannot be found.");
+                        } else {
 
-                    }
+                            trace(traceMsgPrefix + ": SCORM version 2004 was specified by user, but API_1484_11 cannot be found.");
 
-                    break;
+                        }
 
-                case "1.2":
+                        break;
 
-                    if (win.API) {
+                    case "1.2":
 
-                        API = win.API;
+                        if (win.API) {
 
-                    } else {
+                            API = win.API;
 
-                        trace(traceMsgPrefix + ": SCORM version 1.2 was specified by user, but API cannot be found.");
+                        } else {
 
-                    }
+                            trace(traceMsgPrefix + ": SCORM version 1.2 was specified by user, but API cannot be found.");
 
-                    break;
+                        }
 
-            }
+                        break;
 
-        } else { //If SCORM version not specified by user, look for APIs
+                }
 
-            if (win.API_1484_11) { //SCORM 2004-specific API.
+            } else if (win.API_1484_11) { //If SCORM version not specified by user, look for SCORM 2004-specific API.
 
                 scorm.version = "2004"; //Set version
                 API = win.API_1484_11;
 
-            } else if (win.API) { //SCORM 1.2-specific API
+            } else if (win.API) { //If SCORM version not specified by user, look for SCORM 1.2-specific API
 
                 scorm.version = "1.2"; //Set version
                 API = win.API;
 
             }
-
         }
+
 
         if (API) {
 
@@ -186,11 +187,12 @@ further modified by Philip Hutchison
        Returns:     Object if API found, null if no API found
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.API.get = function() {
+    pipwerks.SCORM.API.get = function () {
 
         var API = null,
             win = window,
             scorm = pipwerks.SCORM,
+            windowIsValidOrigin = pipwerks.UTILS.windowIsValidOrigin,
             find = scorm.API.find,
             trace = pipwerks.UTILS.trace;
 
@@ -206,7 +208,8 @@ further modified by Philip Hutchison
 
         //Special handling for Plateau
         //Thanks to Joseph Venditti for the patch
-        if (!API && win.top && win.top.opener && win.top.opener.document) {
+        if (!API && win.top && win.top.opener && windowIsValidOrigin(win.top.opener) && win.top.opener.document) {
+            
             API = find(win.top.opener.document);
         }
 
@@ -229,7 +232,7 @@ further modified by Philip Hutchison
        Returns:     Object (the pipwerks.SCORM.API.handle variable).
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.API.getHandle = function() {
+    pipwerks.SCORM.API.getHandle = function () {
 
         var API = pipwerks.SCORM.API;
 
@@ -257,7 +260,7 @@ further modified by Philip Hutchison
        Returns:     Boolean
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.connection.initialize = function() {
+    pipwerks.SCORM.connection.initialize = function () {
 
         var success = false,
             scorm = pipwerks.SCORM,
@@ -308,17 +311,17 @@ further modified by Philip Hutchison
                                         scorm.status("set", "incomplete");
                                         break;
 
-                                        //SCORM 2004 only
+                                    //SCORM 2004 only
                                     case "unknown":
                                         scorm.status("set", "incomplete");
                                         break;
 
-                                        //Additional options, presented here in case you'd like to use them
-                                        //case "completed"  : break;
-                                        //case "incomplete" : break;
-                                        //case "passed"     : break;    //SCORM 1.2 only
-                                        //case "failed"     : break;    //SCORM 1.2 only
-                                        //case "browsed"    : break;    //SCORM 1.2 only
+                                    //Additional options, presented here in case you'd like to use them
+                                    //case "completed"  : break;
+                                    //case "incomplete" : break;
+                                    //case "passed"     : break;    //SCORM 1.2 only
+                                    //case "failed"     : break;    //SCORM 1.2 only
+                                    //case "browsed"    : break;    //SCORM 1.2 only
 
                                 }
 
@@ -376,7 +379,7 @@ further modified by Philip Hutchison
        Returns:     Boolean
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.connection.terminate = function() {
+    pipwerks.SCORM.connection.terminate = function () {
 
         var success = false,
             scorm = pipwerks.SCORM,
@@ -480,7 +483,7 @@ further modified by Philip Hutchison
        Returns:   string (the value of the specified data model element)
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.data.get = function(parameter) {
+    pipwerks.SCORM.data.get = function (parameter) {
 
         var value = null,
             scorm = pipwerks.SCORM,
@@ -564,7 +567,7 @@ further modified by Philip Hutchison
        Returns:    Boolean
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.data.set = function(parameter, value) {
+    pipwerks.SCORM.data.set = function (parameter, value) {
 
         var success = false,
             scorm = pipwerks.SCORM,
@@ -633,7 +636,7 @@ further modified by Philip Hutchison
        Returns:    Boolean
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.data.save = function() {
+    pipwerks.SCORM.data.save = function () {
 
         var success = false,
             scorm = pipwerks.SCORM,
@@ -674,7 +677,7 @@ further modified by Philip Hutchison
     };
 
 
-    pipwerks.SCORM.status = function(action, status) {
+    pipwerks.SCORM.status = function (action, status) {
 
         var success = false,
             scorm = pipwerks.SCORM,
@@ -743,7 +746,7 @@ further modified by Philip Hutchison
        Returns:    Integer (the last error code).
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.debug.getCode = function() {
+    pipwerks.SCORM.debug.getCode = function () {
 
         var scorm = pipwerks.SCORM,
             API = scorm.API.getHandle(),
@@ -781,7 +784,7 @@ further modified by Philip Hutchison
        Returns:    String.
     ----------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.debug.getInfo = function(errorCode) {
+    pipwerks.SCORM.debug.getInfo = function (errorCode) {
 
         var scorm = pipwerks.SCORM,
             API = scorm.API.getHandle(),
@@ -820,7 +823,7 @@ further modified by Philip Hutchison
        Returns:    String (Additional diagnostic information about the given error code).
     ---------------------------------------------------------------------------- */
 
-    pipwerks.SCORM.debug.getDiagnosticInfo = function(errorCode) {
+    pipwerks.SCORM.debug.getDiagnosticInfo = function (errorCode) {
 
         var scorm = pipwerks.SCORM,
             API = scorm.API.getHandle(),
@@ -878,7 +881,7 @@ further modified by Philip Hutchison
        Returns:    Boolean
     ---------------------------------------------------------------------------- */
 
-    pipwerks.UTILS.StringToBoolean = function(value) {
+    pipwerks.UTILS.StringToBoolean = function (value) {
         var t = typeof value;
         switch (t) {
             //typeof new String("true") === "object", so handle objects as string via fall-through.
@@ -899,6 +902,41 @@ further modified by Philip Hutchison
 
 
     /* -------------------------------------------------------------------------
+       pipwerks.UTILS.windowHasApi()
+       Checks for either API or API_1484_11 on the window.  
+       
+       Parameters: win (Window)
+       Returns:    Boolean
+    ---------------------------------------------------------------------------- */
+
+    pipwerks.UTILS.windowHasApi = function(win) {
+        return pipwerks.UTILS.windowIsValidOrigin(win) && (win.API || win.API_1484_11);
+    }
+
+    /* -------------------------------------------------------------------------
+       pipwerks.UTILS.windowIsValidOrigin()
+       Checks to make sure window and window.document does not throw a Same Origin Policy security exception
+       (see: https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+       
+       (Catches Same Origin Policy exception and returns false)
+
+       Parameters: win (Window)
+       Returns:    Boolean
+    ---------------------------------------------------------------------------- */
+
+    pipwerks.UTILS.windowIsValidOrigin = function(win) {
+        // prevent throwing an exception regarding the Same Origin Policy (see: https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+        try {
+            return win && win.document;
+        }
+        catch (ex) {
+            pipwerks.UTILS.trace(ex);
+            return false;
+        }
+    }
+
+
+    /* -------------------------------------------------------------------------
        pipwerks.UTILS.trace()
        Displays error messages when in debug mode.
 
@@ -906,7 +944,7 @@ further modified by Philip Hutchison
        Return:     None
     ---------------------------------------------------------------------------- */
 
-    pipwerks.UTILS.trace = function(msg) {
+    pipwerks.UTILS.trace = function (msg) {
 
         if (pipwerks.debug.isActive) {
 
