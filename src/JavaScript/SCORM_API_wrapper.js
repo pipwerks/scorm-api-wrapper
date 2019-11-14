@@ -27,7 +27,7 @@ further modified by Philip Hutchison
 (function(root, factory) {
 
     "use strict";
-
+  
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define([], factory);
@@ -52,6 +52,7 @@ further modified by Philip Hutchison
         version: null, //Store SCORM version.
         handleCompletionStatus: true, //Whether or not the wrapper should automatically handle the initial completion status
         handleExitMode: true, //Whether or not the wrapper should automatically handle the exit mode
+        handleSessionTime: false, //Whether or not the wrapper should automatically handle the session time
         API: {
             handle: null,
             isFound: false
@@ -267,6 +268,9 @@ further modified by Philip Hutchison
             debug = scorm.debug,
             traceMsgPrefix = "SCORM.connection.initialize ";
 
+        //set init date-time
+        scorm.data.dtmInitialized = new Date();
+      
         trace("connection.initialize called.");
 
         if (!scorm.connection.isActive) {
@@ -382,11 +386,11 @@ further modified by Philip Hutchison
             scorm = pipwerks.SCORM,
             exitStatus = scorm.data.exitStatus,
             completionStatus = scorm.data.completionStatus,
+            dtmInitialized = scorm.data.dtmInitialized,
             trace = pipwerks.UTILS.trace,
             makeBoolean = pipwerks.UTILS.StringToBoolean,
             debug = scorm.debug,
             traceMsgPrefix = "SCORM.connection.terminate ";
-
 
         if (scorm.connection.isActive) {
 
@@ -396,7 +400,26 @@ further modified by Philip Hutchison
             if (API) {
 
                 if (scorm.handleExitMode && !exitStatus) {
+                    if(scorm.handleSessionTime){
 
+                        var dtm = new Date(); 
+
+                        //in the next line you subtract the time recorded when initialising 
+                        //the connection from the present time. 
+                        var n = dtm.getTime() - dtmInitialized.getTime(); 
+                        switch(scorm.version){ 
+
+                            //the time format is different on scorm 1.2 or 2004, so we use 
+                            //different conversions depending on the case 
+                            case "1.2" :
+                                this.set("cmi.core.session_time",pipwerks.UTILS.msToCMIDuration(n));
+                            break;
+                            case "2004":
+                                this.set("cmi.session_time",pipwerks.UTILS.csToISODuration(Math.floor(n/10)));
+                            break; 
+                        }
+
+                    }
                     if (completionStatus !== "completed" && completionStatus !== "passed") {
 
                         switch (scorm.version) {
@@ -918,6 +941,82 @@ further modified by Philip Hutchison
 
         }
     };
+  
+    /* -------------------------------------------------------------------------
+       pipwerks.UTILS.msToCMIDuration()
+       Converts time to scorm 1.2 time format 
+       Convert duration from milliseconds to 0000:00:00.00 format 
+
+       Parameters: n (number)
+       Return:     String
+    ---------------------------------------------------------------------------- */
+
+    pipwerks.UTILS.msToCMIDuration = function(n){
+
+        n = (!n || n < 0)? 0 : n; //default value and force positive duration
+        var hms = ""; 
+        var dtm = new Date();        dtm.setTime(n);
+        var h = "0" + Math.floor(n / 3600000);
+        var m = "0" + dtm.getMinutes();
+        var s = "0" + dtm.getSeconds();
+        hms = h.substr(h.length - 2) + ":"+ m.substr(m.length - 2) + ":";
+        hms += s.substr(s.length - 2);
+        return hms;
+
+    };
+
+
+    /* -------------------------------------------------------------------------
+       pipwerks.UTILS.csToISODuration()
+       Converts time to scorm 2004 time format using ISO 8601
+
+       Parameters: n (number)
+       Return:     String
+    ---------------------------------------------------------------------------- */
+
+    pipwerks.UTILS.csToISODuration = function(n){
+
+        // Note: SCORM and IEEE 1484.11.1 require centisec precision
+        // Months calculated by approximation based on average number
+        // of days over 4 years (365*4+1), not counting the extra day
+        // every 1000 years. If a reference date was available,
+        // the calculation could be more precise, but becomes complex,
+        // since the exact result depends on where the reference date
+        // falls within the period (e.g. beginning, end or ???)
+        // 1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+        // 1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
+        // 1 day = 8640000 centiseconds
+        // 1 hour = 360000 centiseconds
+        // 1 minute = 6000 centiseconds
+        n = Math.max(n,0); // there is no such thing as a negative duration
+        var str = "P";
+        var nCs = n;
+        // Next set of operations uses whole seconds
+        var nY = Math.floor(nCs / 3155760000);
+        nCs -= nY * 3155760000;
+        var nM = Math.floor(nCs / 262980000);
+        nCs -= nM * 262980000;
+        var nD = Math.floor(nCs / 8640000);
+        nCs -= nD * 8640000;
+        var nH = Math.floor(nCs / 360000);
+        nCs -= nH * 360000;
+        var nMin = Math.floor(nCs /6000);
+        nCs -= nMin * 6000;
+        // Now we can construct string
+        if (nY > 0) str += nY + "Y";
+        if (nM > 0) str += nM + "M";
+        if (nD > 0) str += nD + "D";
+        if ((nH > 0) || (nMin > 0) || (nCs > 0)) {
+            str += "T";
+            if (nH > 0) str += nH + "H";
+            if (nMin > 0) str += nMin + "M";
+            if (nCs > 0) str += (nCs / 100) + "S";
+        }
+        if (str == "P") str = "PT0H0M0S";
+          // technically PT0S should do but SCORM test suite assumes longer form.
+        return str;
+
+    };  
 
     return pipwerks;
 
