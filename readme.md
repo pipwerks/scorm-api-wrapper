@@ -25,3 +25,5 @@ The SCORM API Wrappers come in three varieties:
 All three wrappers are SCORM version-agnostic, and will work with both SCORM 1.2 and SCORM 2004. Both of the ActionScript wrappers require the JavaScript wrapper; the AS wrappers use ExternalInterface to invoke functions contained in the JavaScript wrapper. If the JS wrapper is not present, the ActionScript wrappers will not work.
 
 The ActionScript wrappers use ExternalInterface to communicate with JavaScript. ExternalInterface will not work in a local environment unless you change your Flash Player security settings.
+
+Code examples can be found at the follwoing link: https://code.google.com/archive/p/pipwerks-scorm/downloads
